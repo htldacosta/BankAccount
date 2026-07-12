@@ -43,7 +43,7 @@ public class Main {
                 transferir();
                 break;
             case 5:
-                listar();
+                listarContas();
                 break;
             case 6:
                 System.out.println("Obrigador por usar nossa agência!");
@@ -78,5 +78,85 @@ public class Main {
         operacoes();
     }
 
+    private static Conta encontrarConta(int numeroConta) {
+        Conta conta = null;
+        if(contasBancarias.size() > 0) {
+            for (Conta c: contasBancarias) {
+                if (c.getNumeroConta() == numeroConta);
+                conta = c;
+            }
+        }
+        return conta;
+    }
+
+    public static void depositar() {
+        System.out.println("Número da conta: ");
+        int numeroConta = input.nextInt();
+
+        Conta conta = encontrarConta(numeroConta);
+
+        if (conta != null) {
+            System.out.println("Qual valor deseja depositar?");
+            Double valorDeposito = input.nextDouble();
+            conta.depositar(valorDeposito);
+            System.out.println(" Valor depositado com sucesso!");
+        }else {
+            System.out.println("Conta não encontrada");
+        }
+        operacoes();
+    }
+
+    public static void sacar() {
+        System.out.println("Número da conta: ");
+        int numeroConta = input.nextInt();
+
+        Conta conta = encontrarConta(numeroConta);
+
+        if(conta != null) {
+            System.out.println("Qual valor deseja sacar? ");
+            Double valorSaque = input.nextDouble();
+            conta.sacar(valorSaque);
+            System.out.println("Valor sacado com sucesso!");
+        }else {
+            System.out.println("conta não encontrada!");
+        }
+        operacoes();
+    }
+
+    public static void transferir() {
+        System.out.println("Número da conta do rementente: ");
+        int numeroContaRemetente = input.nextInt();
+
+        Conta contaRemetente = encontrarConta(numeroContaRemetente);
+
+        if (contaRemetente != null) {
+            System.out.println("número da conta do destinatário: ");
+            int numeroContaDestinatario = input.nextInt();
+
+            Conta contaDestinatario = encontrarConta(numeroContaDestinatario);
+
+            if (contaDestinatario != null) {
+                System.out.println("Valor da transferência: ");
+                Double valor = input.nextDouble();
+
+                contaRemetente.transferir(contaDestinatario, valor);
+            }
+        }
+        operacoes();
+
+
+    }
+
+    public static void listarContas() {
+        if (contasBancarias.size() > 0) {
+            for (Conta conta: contasBancarias) {
+                System.out.println(conta);
+            }
+        }else{
+            System.out.println("Não há contas cadastradas!");
+        }
+        operacoes();
+    }
 
 }
+
